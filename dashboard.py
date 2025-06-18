@@ -1,4 +1,5 @@
 def show_dashboard(df):
+    import re
     import streamlit as st
     import matplotlib.pyplot as plt
     import seaborn as sns
