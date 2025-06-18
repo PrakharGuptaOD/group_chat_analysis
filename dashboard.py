@@ -1,10 +1,12 @@
 def show_dashboard(df):
-    import re
-    import streamlit as st
+    import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import re
     from collections import Counter
     from wordcloud import WordCloud
+    import streamlit as st
+
     
     st.title("📊 WhatsApp Chat Dashboard")
 
