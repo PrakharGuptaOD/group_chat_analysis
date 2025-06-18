@@ -33,9 +33,19 @@ def show_dashboard(df):
 
     st.header("3. 🕒 Activity Timeline")
     timeline = df.groupby("date").count()["message"]
-    fig2, ax2 = plt.subplots()
-    timeline.plot(ax=ax2)
-    st.pyplot(fig2)
+    fig, ax = plt.subplots(figsize=(10, 4))
+    timeline.plot(ax=ax)
+    ax.set_title("Daily Messages")
+    ax.set_ylabel("Message Count")
+    
+    # Rotate x-axis date labels
+    for label in ax.get_xticklabels():
+        label.set_rotation(45)
+        label.set_ha('right')
+    
+    plt.tight_layout()
+    st.pyplot(fig)
+
 
     st.divider()
 
