@@ -62,14 +62,7 @@ def show_dashboard(df):
     sns.barplot(data=words_df, x="count", y="word", ax=ax5)
     st.pyplot(fig5)
 
-    st.divider()
 
-    st.header("7. 🌈 Word Cloud")
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(" ".join(words))
-    fig6, ax6 = plt.subplots(figsize=(10, 5))
-    ax6.imshow(wordcloud, interpolation="bilinear")
-    ax6.axis("off")
-    st.pyplot(fig6)
 
     st.divider()
 
@@ -80,3 +73,22 @@ def show_dashboard(df):
     link_timeline.plot(ax=ax7)
     st.pyplot(fig7)
 
+    st.subheader("🔗 All Shared Links")
+    link_df = df[df["message"].str.contains("http", case=False, na=False)].copy()
+    link_df = link_df.sort_values("datetime").reset_index(drop=True)
+    link_df = link_df[["datetime", "user", "message"]]
+    link_df.columns = ["Timestamp", "Sender", "Message"]
+    search_text = st.text_input("Search in shared links")
+    if search_text:
+        link_df = link_df[link_df["Message"].str.contains(search_text, case=False, na=False)]
+    
+    st.dataframe(link_df, use_container_width=True)
+    
+    st.divider()
+
+    st.header("7. 🌈 Word Cloud")
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(" ".join(words))
+    fig6, ax6 = plt.subplots(figsize=(10, 5))
+    ax6.imshow(wordcloud, interpolation="bilinear")
+    ax6.axis("off")
+    st.pyplot(fig6)
